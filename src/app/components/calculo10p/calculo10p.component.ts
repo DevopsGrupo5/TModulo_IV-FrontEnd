@@ -84,17 +84,19 @@ export class Calculo10pComponent implements OnInit {
   add_CtrlResultados(saldo: number, sueldo: number): any {
 
     console.log('nombre: ', saldo, sueldo);
+    const miSaldo: string = Intl.NumberFormat('de-DE').format(saldo);
+    const miSueldo: string = Intl.NumberFormat('de-DE').format(sueldo);
+    console.log('nombre: ', miSaldo, miSueldo);
     // tslint:disable-next-line:no-string-literal
     const control = this.fcalculoDzpp.controls['crt_resultados'] as FormArray;
-
     if (this.isAdd) {
       this.fcalculoDzpp = this.fb.group({
         SaldoAhorrado: [''],
         Sueldo: [''],
 
         crt_resultados: this.fb.array([this.fb.group({
-          asaldoAhorrado: [saldo],
-          asueldo: [sueldo],
+          asaldoAhorrado: [miSaldo],
+          asueldo: [miSueldo],
           diezpp: [0, {disabled: false}],
           saldoRestante: [0, {disabled: false}],
           Impuesto: [0, {disabled: false}],
@@ -103,8 +105,8 @@ export class Calculo10pComponent implements OnInit {
 
   } else {
       control.push(this.fb.group({
-        asaldoAhorrado: [saldo],
-        asueldo: [sueldo],
+        asaldoAhorrado: [miSaldo],
+        asueldo: [miSueldo],
         diezpp: [0, {disabled: false}],
         saldoRestante: [0, {disabled: false}],
         Impuesto: [0, {disabled: false}],
