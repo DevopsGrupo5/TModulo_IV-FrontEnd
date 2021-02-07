@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://jsonplaceholder.typicode.com',
-  apiCalculo:'http://localhost:8080/rest/msdxc/',
+  apiCalculo:'http://104.198.16.132:8083//rest/msdxc/',
 };
 
 /*
