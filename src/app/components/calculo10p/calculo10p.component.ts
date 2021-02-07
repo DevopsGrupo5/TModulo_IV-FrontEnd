@@ -87,17 +87,17 @@ export class Calculo10pComponent implements OnInit {
    
     // tslint:disable-next-line:no-string-literal
     const control = this.fcalculoDzpp.controls['crt_resultados'] as FormArray;
-
+    let saldo_restante=parseInt(this.calculos.saldo)-parseInt(this.calculos.impuesto);
     if (this.isAdd) {
       this.fcalculoDzpp = this.fb.group({
         SaldoAhorrado: [''],
         Sueldo: [''],
-
+     
         crt_resultados: this.fb.array([this.fb.group({
           asaldoAhorrado: [this.calculos.saldo],
           asueldo: [this.calculos.sueldo],
           diezpp: [this.calculos.dxc, {disabled: false}],
-          saldoRestante: [0, {disabled: false}],
+          saldoRestante: [saldo_restante, {disabled: false}],
           Impuesto: [this.calculos.impuesto, {disabled: false}],
         })])
        });
