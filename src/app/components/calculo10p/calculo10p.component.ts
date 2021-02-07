@@ -76,36 +76,49 @@ export class Calculo10pComponent implements OnInit {
       this.calculos = res;
       
        
-      this.add_CtrlResultados();
+      this.add_CtrlResultados(formValue.Sueldo,formValue.SaldoAhorrado);
     },
      // console.error(err)
     );
   }
 
-  add_CtrlResultados(): any {
+  add_CtrlResultados(sueldo:number,saldo:number): any {
 
    
     // tslint:disable-next-line:no-string-literal
-    const control = this.fcalculoDzpp.controls['crt_resultados'] as FormArray;
+    const control:any = this.fcalculoDzpp.controls['crt_resultados'] as FormArray;
     let saldo_restante=parseInt(this.calculos.saldo)-parseInt(this.calculos.impuesto);
+
+    const miSaldo: string = Intl.NumberFormat('de-DE').format(saldo);
+    const miSueldo: string = Intl.NumberFormat('de-DE').format(sueldo);
+    console.log('nombre: ', miSaldo, miSueldo);
+    // tslint:disable-next-line:no-string-literal
+
+
     if (this.isAdd) {
       this.fcalculoDzpp = this.fb.group({
         SaldoAhorrado: [''],
         Sueldo: [''],
      
         crt_resultados: this.fb.array([this.fb.group({
+
           asaldoAhorrado: [this.calculos.saldo],
           asueldo: [this.calculos.sueldo],
           diezpp: [this.calculos.dxc, {disabled: false}],
           saldoRestante: [saldo_restante, {disabled: false}],
           Impuesto: [this.calculos.impuesto, {disabled: false}],
+
+        
+
         })])
        });
 
   } else {
       control.push(this.fb.group({
+
         asaldoAhorrado: [this.calculos.saldo],
         asueldo: [this.calculos.sueldo],
+
         diezpp: [0, {disabled: false}],
         saldoRestante: [0, {disabled: false}],
         Impuesto: [0, {disabled: false}],
