@@ -12,11 +12,11 @@ export class DiezppService {
 
   private API_URI: string;
   constructor(private http: HttpClient) {
-    this.API_URI = environment.apiUrl;
+    this.API_URI = environment.apiCalculo;
   }
 
-  getAllTask(): any {
-    const path = `${this.API_URI}/todos`;
+  getAllTask(sueldo:number,ahorro:number): any {
+    const path = `${this.API_URI}/dxc?sueldo=${sueldo}&ahorro=${ahorro}`;
     return this.http.get<Diezpp[]>(path);
 
   }

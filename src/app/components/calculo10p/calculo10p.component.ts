@@ -30,7 +30,7 @@ export class Calculo10pComponent implements OnInit {
     title: '',
     completed: true
   };
-
+   calculos:any;
 
   constructor(private diezppService: DiezppService,
               private fb: FormBuilder
@@ -61,8 +61,8 @@ export class Calculo10pComponent implements OnInit {
     return this.fcalculoDzpp.get('crt_resultados') as FormArray;
   }
 
-  getAllTask(): any {
-    this.diezppService.getAllTask().subscribe((res: any) => {
+  getAllTask(sueldo:number,ahorro:number): any {
+    this.diezppService.getAllTask(sueldo,ahorro).subscribe((res: any) => {
       this.diezpp = res;
       console.log('diezpp: ', this.diezpp);
     },
@@ -71,19 +71,20 @@ export class Calculo10pComponent implements OnInit {
   }
 
   traeResultados(formValue: any): any {
-
-    this.diezppService.getAllTask().subscribe((res: any) => {
-      this.diezpp = res;
-      console.log('diezpp: ', this.diezpp);
-      this.add_CtrlResultados(formValue.SaldoAhorrado, formValue.Sueldo, );
+  
+    this.diezppService.getAllTask(formValue.Sueldo,formValue.SaldoAhorrado).subscribe((res: any) => {
+      this.calculos = res;
+      
+       
+      this.add_CtrlResultados();
     },
      // console.error(err)
     );
   }
 
-  add_CtrlResultados(saldo: number, sueldo: number): any {
+  add_CtrlResultados(): any {
 
-    console.log('nombre: ', saldo, sueldo);
+   
     // tslint:disable-next-line:no-string-literal
     const control = this.fcalculoDzpp.controls['crt_resultados'] as FormArray;
 
@@ -93,18 +94,18 @@ export class Calculo10pComponent implements OnInit {
         Sueldo: [''],
 
         crt_resultados: this.fb.array([this.fb.group({
-          asaldoAhorrado: [saldo],
-          asueldo: [sueldo],
-          diezpp: [0, {disabled: false}],
+          asaldoAhorrado: [this.calculos.saldo],
+          asueldo: [this.calculos.sueldo],
+          diezpp: [this.calculos.dxc, {disabled: false}],
           saldoRestante: [0, {disabled: false}],
-          Impuesto: [0, {disabled: false}],
+          Impuesto: [this.calculos.impuesto, {disabled: false}],
         })])
        });
 
   } else {
       control.push(this.fb.group({
-        asaldoAhorrado: [saldo],
-        asueldo: [sueldo],
+        asaldoAhorrado: [this.calculos.saldo],
+        asueldo: [this.calculos.sueldo],
         diezpp: [0, {disabled: false}],
         saldoRestante: [0, {disabled: false}],
         Impuesto: [0, {disabled: false}],
